@@ -87,7 +87,7 @@ var madd2_map = map[int]string{ 0: "" ,
 // madd2 PTX code for various compute capabilities.
 const(
   madd2_ptx_30 = `
-.version 6.3
+.version 6.4
 .target sm_30
 .address_size 64
 
@@ -144,7 +144,7 @@ BB0_2:
 
 `
    madd2_ptx_35 = `
-.version 6.3
+.version 6.4
 .target sm_35
 .address_size 64
 
@@ -201,7 +201,7 @@ BB0_2:
 
 `
    madd2_ptx_37 = `
-.version 6.3
+.version 6.4
 .target sm_37
 .address_size 64
 
@@ -258,7 +258,7 @@ BB0_2:
 
 `
    madd2_ptx_50 = `
-.version 6.3
+.version 6.4
 .target sm_50
 .address_size 64
 
@@ -315,7 +315,7 @@ BB0_2:
 
 `
    madd2_ptx_52 = `
-.version 6.3
+.version 6.4
 .target sm_52
 .address_size 64
 
@@ -372,7 +372,7 @@ BB0_2:
 
 `
    madd2_ptx_53 = `
-.version 6.3
+.version 6.4
 .target sm_53
 .address_size 64
 
@@ -429,7 +429,7 @@ BB0_2:
 
 `
    madd2_ptx_60 = `
-.version 6.3
+.version 6.4
 .target sm_60
 .address_size 64
 
@@ -486,7 +486,7 @@ BB0_2:
 
 `
    madd2_ptx_61 = `
-.version 6.3
+.version 6.4
 .target sm_61
 .address_size 64
 
@@ -543,7 +543,7 @@ BB0_2:
 
 `
    madd2_ptx_70 = `
-.version 6.3
+.version 6.4
 .target sm_70
 .address_size 64
 
@@ -600,7 +600,7 @@ BB0_2:
 
 `
    madd2_ptx_75 = `
-.version 6.3
+.version 6.4
 .target sm_75
 .address_size 64
 

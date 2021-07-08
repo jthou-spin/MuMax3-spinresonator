@@ -63,6 +63,10 @@ const (
 	RUNGEKUTTA     = 4
 	DORMANDPRINCE  = 5
 	FEHLBERG       = 6
+	RUNGEKUTTARES  = 7
+	DORMANDPRINCERES=8
+	RK56RESONATORNEW=9
+	RK56RESONATORTIME=10
 )
 
 func SetSolver(typ int) {
@@ -87,6 +91,14 @@ func SetSolver(typ int) {
 		stepper = new(RK45DP)
 	case FEHLBERG:
 		stepper = new(RK56)
+	case RUNGEKUTTARES:
+		stepper = new(RK4resonator)
+	case DORMANDPRINCERES:
+		stepper = new(RK56resonator)
+	case RK56RESONATORNEW:
+		stepper = new(RK56resonatornew)
+	case RK56RESONATORTIME:
+		stepper = new(RK56resonatortime)
 	}
 	solvertype = typ
 }

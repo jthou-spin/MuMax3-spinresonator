@@ -93,7 +93,7 @@ var copyunpad_map = map[int]string{ 0: "" ,
 // copyunpad PTX code for various compute capabilities.
 const(
   copyunpad_ptx_30 = `
-.version 6.3
+.version 6.4
 .target sm_30
 .address_size 64
 
@@ -135,15 +135,13 @@ const(
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;
@@ -164,7 +162,7 @@ BB0_2:
 
 `
    copyunpad_ptx_35 = `
-.version 6.3
+.version 6.4
 .target sm_35
 .address_size 64
 
@@ -206,15 +204,13 @@ BB0_2:
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;
@@ -235,7 +231,7 @@ BB0_2:
 
 `
    copyunpad_ptx_37 = `
-.version 6.3
+.version 6.4
 .target sm_37
 .address_size 64
 
@@ -277,15 +273,13 @@ BB0_2:
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;
@@ -306,7 +300,7 @@ BB0_2:
 
 `
    copyunpad_ptx_50 = `
-.version 6.3
+.version 6.4
 .target sm_50
 .address_size 64
 
@@ -348,15 +342,13 @@ BB0_2:
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;
@@ -377,7 +369,7 @@ BB0_2:
 
 `
    copyunpad_ptx_52 = `
-.version 6.3
+.version 6.4
 .target sm_52
 .address_size 64
 
@@ -419,15 +411,13 @@ BB0_2:
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;
@@ -448,7 +438,7 @@ BB0_2:
 
 `
    copyunpad_ptx_53 = `
-.version 6.3
+.version 6.4
 .target sm_53
 .address_size 64
 
@@ -490,15 +480,13 @@ BB0_2:
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;
@@ -519,7 +507,7 @@ BB0_2:
 
 `
    copyunpad_ptx_60 = `
-.version 6.3
+.version 6.4
 .target sm_60
 .address_size 64
 
@@ -561,15 +549,13 @@ BB0_2:
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;
@@ -590,7 +576,7 @@ BB0_2:
 
 `
    copyunpad_ptx_61 = `
-.version 6.3
+.version 6.4
 .target sm_61
 .address_size 64
 
@@ -632,15 +618,13 @@ BB0_2:
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;
@@ -661,7 +645,7 @@ BB0_2:
 
 `
    copyunpad_ptx_70 = `
-.version 6.3
+.version 6.4
 .target sm_70
 .address_size 64
 
@@ -703,15 +687,13 @@ BB0_2:
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;
@@ -732,7 +714,7 @@ BB0_2:
 
 `
    copyunpad_ptx_75 = `
-.version 6.3
+.version 6.4
 .target sm_75
 .address_size 64
 
@@ -774,15 +756,13 @@ BB0_2:
 	mov.u32 	%r16, %ctaid.z;
 	mov.u32 	%r17, %tid.z;
 	mad.lo.s32 	%r3, %r15, %r16, %r17;
-	setp.lt.s32	%p1, %r1, %r4;
-	setp.lt.s32	%p2, %r2, %r5;
-	and.pred  	%p3, %p1, %p2;
-	setp.lt.s32	%p4, %r3, %r8;
-	and.pred  	%p5, %p3, %p4;
-	@!%p5 bra 	BB0_2;
-	bra.uni 	BB0_1;
+	setp.ge.s32	%p1, %r1, %r4;
+	setp.ge.s32	%p2, %r2, %r5;
+	or.pred  	%p3, %p1, %p2;
+	setp.ge.s32	%p4, %r3, %r8;
+	or.pred  	%p5, %p3, %p4;
+	@%p5 bra 	BB0_2;
 
-BB0_1:
 	cvta.to.global.u64 	%rd3, %rd2;
 	mad.lo.s32 	%r18, %r3, %r7, %r2;
 	mad.lo.s32 	%r19, %r18, %r6, %r1;

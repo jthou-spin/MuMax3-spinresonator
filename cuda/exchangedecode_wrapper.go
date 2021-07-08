@@ -99,7 +99,7 @@ var exchangedecode_map = map[int]string{ 0: "" ,
 // exchangedecode PTX code for various compute capabilities.
 const(
   exchangedecode_ptx_30 = `
-.version 6.3
+.version 6.4
 .target sm_30
 .address_size 64
 
@@ -363,7 +363,7 @@ BB0_22:
 
 `
    exchangedecode_ptx_35 = `
-.version 6.3
+.version 6.4
 .target sm_35
 .address_size 64
 
@@ -633,7 +633,7 @@ BB0_22:
 
 `
    exchangedecode_ptx_37 = `
-.version 6.3
+.version 6.4
 .target sm_37
 .address_size 64
 
@@ -903,7 +903,7 @@ BB0_22:
 
 `
    exchangedecode_ptx_50 = `
-.version 6.3
+.version 6.4
 .target sm_50
 .address_size 64
 
@@ -1173,7 +1173,7 @@ BB0_22:
 
 `
    exchangedecode_ptx_52 = `
-.version 6.3
+.version 6.4
 .target sm_52
 .address_size 64
 
@@ -1443,7 +1443,7 @@ BB0_22:
 
 `
    exchangedecode_ptx_53 = `
-.version 6.3
+.version 6.4
 .target sm_53
 .address_size 64
 
@@ -1713,7 +1713,7 @@ BB0_22:
 
 `
    exchangedecode_ptx_60 = `
-.version 6.3
+.version 6.4
 .target sm_60
 .address_size 64
 
@@ -1983,7 +1983,7 @@ BB0_22:
 
 `
    exchangedecode_ptx_61 = `
-.version 6.3
+.version 6.4
 .target sm_61
 .address_size 64
 
@@ -2253,7 +2253,7 @@ BB0_22:
 
 `
    exchangedecode_ptx_70 = `
-.version 6.3
+.version 6.4
 .target sm_70
 .address_size 64
 
@@ -2523,7 +2523,7 @@ BB0_22:
 
 `
    exchangedecode_ptx_75 = `
-.version 6.3
+.version 6.4
 .target sm_75
 .address_size 64
 
