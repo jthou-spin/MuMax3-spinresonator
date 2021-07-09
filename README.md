@@ -44,12 +44,12 @@ Consider downloading a pre-compiled binary. If you want to compile nevertheless:
     - MacOSX: https://developer.apple.com/xcode/download/
     - Windows: http://sourceforge.net/projects/mingw-w64/
   * if you have git installed: 
-    - `go get github.com/mumax/3/cmd/mumax3`
+    - `go get github.com/jthou0129/Mumax3_spinresonator/cmd/mumax3`
   * if you don't have git:
     - seriously, no git?
     - get the source from https://github.com/mumax/3/releases
     - unzip the source into $GOPATH/src/github.com/mumax/3
-    - `cd $GOPATH/src/github.com/mumax/3/cmd/mumax3`
+    - `cd $GOPATH/src/github.com/jthou0129/Mumax3_spinresonator/cmd/mumax3`
     - `go install`
   * optional: install gnuplot if you want pretty graphs
     - Ubuntu: `sudo apt-get install gnuplot`
@@ -59,7 +59,7 @@ Your binary is now at `$GOPATH/bin/mumax3`
 To do all at once on Ubuntu:
 ```
 sudo apt-get install git golang-go gcc nvidia-cuda-toolkit nvidia-cuda-dev nvidia-340 gnuplot
-GOPATH=$HOME go get -u -v github.com/mumax/3/cmd/mumax3
+GOPATH=$HOME go get -u -v github.com//jthou0129/Mumax3_spinresonator/cmd/mumax3
 ```
 
 Contributing
