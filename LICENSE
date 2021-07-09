@@ -1,6 +1,7 @@
 Mumax3 GPU-accelerated micromagnetic simulator
 Copyright (C) 2012-2014  Arne Vansteenkiste.
 Contributions by Ahmad Syukri, Colin Jermain, Jonathan Leliaert, Mykola Dvornik.
+The spin-resonator coupling simulation is augmented by Justin Hou.
 
 Mumax3 is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
