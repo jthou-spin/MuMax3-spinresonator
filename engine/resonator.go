@@ -1,17 +1,15 @@
 package engine
 
 import (
-//	"github.com/mumax/3/cuda/curand"
 	"github.com/mumax/3/cuda"
 	"github.com/mumax/3/data"
 	"github.com/mumax/3/mag"
-//	"unsafe"
 	"math"
 	"math/rand"
 	"time"
 )
 
-//All variables here are global, because they are first letter capital. V and I will be updated if solver involves SetResonatorFnNew
+//All variables here are global, because they are first letter capital. V and I will be updated if solver involves SetResonatorFnNewNew
 //Other variables, such as L,C,Brf,and R, are treated as time independent parameters
 //variables in float32type, which is similar to Slice for magnetization data. This is due to cuda programming requirement.
 var(
@@ -28,8 +26,6 @@ var(
 	TempRes	float32=float32(0.0)
 	V_therm	thermResonator
 	I_therm thermResonator
-//	V_go	float32
-//	I_go 	float32
 	Vout	=NewScalarValue("Vout","Volt","Resonator Voltage",GetVoltage) //Use tableadd(Vout) to print V, just as E_total in engine/energy.go
 	Iout    =NewScalarValue("Iout","Ampere","Resonator Current",GetCurrent) //Use tableadd(Iout) to print I, just as E_total
 	Lout    =NewScalarValue("Lout","Henry","Resonator Inductor",GetInductor) //Use tableadd(Lout) to print L, just as E_total
@@ -38,11 +34,6 @@ var(
 )
 
 type thermResonator struct{
-//	seed		int64
-//	generator	curand.Generator
-//	noise 		*float32
-//	noise		[]unsafe.Pointer	
-//	noise		unsafe.Pointer
 	noise		float64
 	step		int
 	dt		float64
@@ -60,8 +51,6 @@ func init() {
 	DeclFunc("SetTini",SetTini,"Set Tini")
 	DeclFunc("SetTfinal",SetTfinal,"Set Tfinal")
 	DeclFunc("SetTempRes",SetTempRes,"Set Resonator Temperature")
-//	DeclFunc("ThermISeed",ThermISeed,"Set a random seed for I thermal noise")
-//	DeclFunc("ThermVSeed",ThermVSeed,"Set a random seed for V thermal noise")
 	I_therm.step=-1
 	V_therm.step=-1
 	I_therm.dt=-1
@@ -147,14 +136,8 @@ func SetResonatorFnNewNew(ktorque *data.Slice) (float32, float32){
 	if !Temp.isZero(){
 		V_therm.Vupdate()
 		I_therm.Iupdate()
-//		forcurrent=forcurrent+*(I_therm.noise)
-//		forvoltage=forvoltage+*(V_therm.noise)			
-//		forcurrent=forcurrent+I_therm.noise[0]
-//		forvoltage=forvoltage+V_therm.noise[0]
 		forcurrent=forcurrent+float32(I_therm.noise)
 		forvoltage=forvoltage+float32(V_therm.noise)
-//		forcurrent=forcurrent+float32(I_go)
-//		forvoltage=forvoltage+float32(V_go)
 	}
 	return forcurrent,forvoltage
 }
@@ -182,24 +165,6 @@ func TotalMoment() []float32{
 	return totalmoment
 }
 
-//func TotalTorque(ktorque *data.Slice) []float32{
-//	mscaletorque := cuda.Buffer(3, size)
-//	defer cuda.Recycle(mscaletorque)
-//
-//	msat,rM := Msat.Slice()
-//	if rM{
-//		defer cuda.Recycle(msat)
-//	}
-//	for c := 0; c < 3; c++{
-//		cuda.Mul(mscalemtorque.Comp(c), ktorque.Comp(c), msat)
-//	}
-//	totaltorque:=make([]float32,3)
-//	cellvolume:=lazy_cellsize[0]*lazy_cellsize[1]*lazy_cellsize[2]
-//	for i:=range totaltorque{
-//		totaltorque[i]=float32(cuda.Sum(mscaletorque.Comp(i)))*float32(cellvolume)
-//	}
-//	return totaltorque
-//}
 
 func (res *thermResonator) Iupdate(){
 	// we need to fix the time step here because solver will not yet have done it before the first step.
@@ -207,21 +172,6 @@ func (res *thermResonator) Iupdate(){
 	if FixDt != 0 {
 		Dt_si = FixDt
 	}
-
-//	if res.generator == 0 {
-//		res.generator = curand.CreateGenerator(curand.PSEUDO_DEFAULT)
-//		res.generator.SetSeed(res.seed)
-//	}
-//	if res.noise == nil {
-//		res.noise = make([]float32,1)
-//		res.noise = make([]unsafe.Pointer,1)
-//		res.noise = unsafe.Pointer(&make([]float32,1)[0])
-//		r:= rand.New(rand.NewSource(time.Now().UnixNano()))	
-//		res.noise = r.NormFloat64()
-//		// when noise was (re-)allocated it's invalid for sure.
-//		I_therm.step = -1
-//		I_therm.dt = -1
-//	}
 
 	if Temp.isZero() {
 		res.step = NSteps
@@ -236,10 +186,6 @@ func (res *thermResonator) Iupdate(){
 
 	// after a bad step the timestep is rescaled and the noise should be rescaled accordingly, instead of redrawing the random numbers
 	if NSteps == res.step && Dt_si != res.dt {
-	//	*res.noise=(*res.noise)*float32(math.Sqrt(res.dt/Dt_si))	
-	//	res.noise[0]=res.noise[0]*float32(math.Sqrt(res.dt/Dt_si))	
-	//	*(*float32)(res.noise)=*(*float32)(res.noise)*float32(math.Sqrt(res.dt/Dt_si))
-	//	r:= rand.New(rand.NewSource(time.Now().UnixNano()))	
 		res.noise=res.noise*math.Sqrt(res.dt/Dt_si)
 		res.dt = Dt_si
 		return
@@ -254,9 +200,6 @@ func (res *thermResonator) Iupdate(){
 	dt32:=float32(Dt_si)	
 	const mean = 0
 	const stddev = 1
-//	res.generator.GenerateNormal(uintptr(res.noise), int64(1), mean, stddev)
-//	*res.noise=(*res.noise)*float32(math.Sqrt(float64(R*mag.Kb*TempRes/(L*L*dt32))))
-//	*(*float32)(res.noise)=*(*float32)(res.noise)*float32(math.Sqrt(float64(R*mag.Kb*TempRes/(L*L*dt32))))
 	r:= rand.New(rand.NewSource(time.Now().UnixNano()))	
 	res.noise = r.NormFloat64()
 	res.noise=res.noise*math.Sqrt(float64(R*mag.Kb*TempRes/(L*L*dt32)))
@@ -272,18 +215,6 @@ func (res *thermResonator) Vupdate(){
 		Dt_si = FixDt
 	}
 
-//	if res.generator == 0 {
-//		res.generator = curand.CreateGenerator(curand.PSEUDO_DEFAULT)
-//		res.generator.SetSeed(res.seed)
-//	}
-//	if res.noise == nil {
-//	//	res.noise = make([]float32,1)
-//	//	res.noise = make([]unsafe.Pointer,1)
-//		res.noise = unsafe.Pointer(&make([]float32,1)[0])
-//		// when noise was (re-)allocated it's invalid for sure.
-//		V_therm.step = -1
-//		V_therm.dt = -1
-//	}
 
 	if Temp.isZero() {
 		res.step = NSteps
@@ -298,9 +229,6 @@ func (res *thermResonator) Vupdate(){
 
 	// after a bad step the timestep is rescaled and the noise should be rescaled accordingly, instead of redrawing the random numbers
 	if NSteps == res.step && Dt_si != res.dt {
-	//	*res.noise=(*res.noise)*float32(math.Sqrt(res.dt/Dt_si))	
-	//	res.noise[0]=res.noise[0]*float32(math.Sqrt(res.dt/Dt_si))	
-	//	*(*float32)(res.noise)=*(*float32)(res.noise)*float32(math.Sqrt(res.dt/Dt_si))
 		res.noise=res.noise*math.Sqrt(res.dt/Dt_si)
 		res.dt = Dt_si
 		return
@@ -315,33 +243,12 @@ func (res *thermResonator) Vupdate(){
 	dt32:=float32(Dt_si)
 	const mean = 0
 	const stddev = 1
-//	res.generator.GenerateNormal(uintptr(res.noise), int64(1), mean, stddev)
-//	*res.noise=(*res.noise)*float32(math.Sqrt(float64(R*mag.Kb*TempRes/(L*C*dt32))))
-//	*(*float32)(res.noise)=*(*float32)(res.noise)*float32(math.Sqrt(float64(R*mag.Kb*TempRes/(L*C*dt32))))
 	r:= rand.New(rand.NewSource(time.Now().UnixNano()))	
 	res.noise = r.NormFloat64()
 	res.noise=res.noise*math.Sqrt(float64(R*mag.Kb*TempRes/(L*C*dt32)))
 	res.step = NSteps
 	res.dt = Dt_si
 }
-
-
-
-//func ThermISeed(seed int){
-//	I_therm.seed=int64(seed)
-//	if I_therm.generator !=0 {
-//		I_therm.generator.SetSeed(I_therm.seed)
-//	}
-//}
-
-
-//func ThermVSeed(seed int){
-//	V_therm.seed=int64(seed)
-//	if V_therm.generator !=0 {
-//		V_therm.generator.SetSeed(V_therm.seed)
-//	}
-//}
-
 
 
 
