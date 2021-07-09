@@ -2,7 +2,7 @@ mumax3 with spin-resonator coupling
 ======
 [![Build Status](https://travis-ci.org/mumax/3.svg?branch=master)](https://travis-ci.org/mumax/3)
 
-GPU accelerated micromagnetic simulator. Modified based on Mumax 3.10. 
+GPU accelerated micromagnetic simulator with spin-resonator coupling. Modified based on Mumax 3.10. 
 
 
 Downloads and documentation
