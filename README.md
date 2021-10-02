@@ -18,6 +18,8 @@ The Design and Verification of mumax3:
 
 http://scitation.aip.org/content/aip/journal/adva/4/10/10.1063/1.4899186
 
+Proposal for a Spin-Torque-Oscillator Maser Enabled by Microwave Photon-Spin Coupling
+https://journals.aps.org/prapplied/abstract/10.1103/PhysRevApplied.16.034034
 
 Tools
 -----
@@ -61,6 +63,78 @@ To do all at once on Ubuntu:
 sudo apt-get install git golang-go gcc nvidia-cuda-toolkit nvidia-cuda-dev nvidia-340 gnuplot
 GOPATH=$HOME go get -u -v github.com//jthou0129/Mumax3_spinresonator/cmd/mumax3
 ```
+
+
+Example m-file for STO Maser Simulation
+------------
+sizeX := 1280e-9
+sizeY := 1280e-9
+sizeZ := 5e-9
+
+Nx := 128
+Ny := 128
+ 
+setgridsize(Nx, Ny, 1)
+setcellsize(sizeX/Nx, sizeY/Ny, sizeZ)
+setGeom(ellipse(sizeX, sizeY))
+
+// set up free layer
+Msat  = 550e3
+Aex   = 9e-12
+alpha = 0.04
+Ku1 = 0.181e6
+anisU = vector(0,0,1)
+m     = uniform(0, 1, 0)
+B_ext=vector(0,0.18,0)
+
+// set up spacer layer parameters
+lambda       = 1
+Pol          = 0.5669
+epsilonprime = 0
+
+// set up fixed layer polarization
+angle := 90
+px := cos(angle * pi/180)
+py := sin(angle * pi/180)
+fixedlayer = vector(px, py, 0)
+
+// send current
+Jtot :=-0.2304           // total current in A
+area := sizeX*sizeY*pi/4
+jc   := Jtot / area       // current density in A/m2
+J = vector(0, 0, jc)
+
+SetSolver(7)
+tempvalue:=300.0
+Temp=tempvalue
+
+//
+Zr:=50.0
+wr:=2*pi*5e9
+Qfactor:=1000.0
+Brfvalue:=15
+
+Lvalue:=Zr/wr
+Cvalue:=1/wr/Zr
+Rvalue:=sqrt(Lvalue/Cvalue)/Qfactor
+
+SetL(Lvalue)
+SetC(Cvalue)
+SetR(Rvalue)
+SetBrf(Brfvalue)
+SetTempRes(tempvalue)
+InitialI(0.0)
+InitialV(0.0)
+
+// schedule output & run
+autosave(m, 100e-9)
+tableadd(Vout)
+tableadd(Iout)
+tableautosave(2.5e-12)
+run(12000e-9)
+
+
+
 
 Contributing
 ------------
