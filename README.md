@@ -20,6 +20,7 @@ http://scitation.aip.org/content/aip/journal/adva/4/10/10.1063/1.4899186
 
 Proposal for a Spin-Torque-Oscillator Maser Enabled by Microwave Photon-Spin Coupling
 https://journals.aps.org/prapplied/abstract/10.1103/PhysRevApplied.16.034034
+
 Please see STO1280nmBrf15Fr5B1800T300.mx3 in test folder for an example m-file for STO Maser simulation
 
 Tools
